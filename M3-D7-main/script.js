@@ -30,6 +30,11 @@ console.log( data[2].address.street, data[2].address.suite, data[2].address.city
 }
 
 function search(query) {
+  const field = document.querySelector("select").value
+
+  const filtered = usersList.filter( user => user[field].includes(query))
+
+
   async function fetchUsers() {
     try {
       let response = await fetch("https://jsonplaceholder.typicode.com/users");
