@@ -10,7 +10,21 @@ async function fetchUsers() {
     let data = await response.json();
     // wait until the request completes
     console.log(data);
-  } catch {
+console.log( data[2].address.street, data[2].address.suite, data[2].address.city,"(", data[2].address.zipcode,")")
+    const table = document.querySelector('.table')
+    table.innerHTML = ""
+    data.forEach(user => {
+      let userRow = document.createElement("tr")
+      userRow= `<tr>
+                  <th scope="row"></th>
+                  <td>${user.name}</td>
+                  <td>${user.username}</td>
+                  <td>${user.email}</td>
+                  <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode} </td>
+                </tr>`
+      table.innerHTML += userRow
+   })
+  } catch(err) {
     console.log(err);
   }
 }
@@ -30,7 +44,7 @@ function search(query) {
       filteredNames = users.filter((user) => {
         user.name.toLowerCase().includes(query, toLowerCase());
       });
-    } catch {
+    } catch(err) {
       console.log(err);
     }
   }
@@ -58,7 +72,7 @@ function search(query) {
       button.addEventListener("click", () => {
         let userData = document.getElementById("userData");
         let div = document.createElement("div");
-        if (selector.value == "name") {
+        if (selector.value === "name") {
           div.innerHTML = `<li>${element.name}</li>`;
           userData.appendChild(div);
         } else if (selector.value == "email") {
